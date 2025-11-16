@@ -1,0 +1,13 @@
+{
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "dart.flutterSdkPath": ".fvm/versions/3.32.8",
+  "makefile.configureOnOpen": false
+}

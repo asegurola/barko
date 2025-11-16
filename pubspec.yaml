@@ -1,0 +1,57 @@
+name: barko
+description: A log viewer app
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+license: MIT
+
+environment:
+  sdk: '>=3.8.0 <3.9.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  dio: ^5.4.0
+  dio_logging_interceptor:
+    git:
+      url: https://github.com/kokiweb/dio_logging_interceptor/
+      ref: master
+  shared_preferences: ^2.1.1
+  encrypted_shared_preferences: ^3.0.1
+  get_it: ^8.1.0
+  json_annotation: ^4.8.1
+  mobx: ^2.5.0
+  flutter_mobx: ^2.3.0
+  collection: ^1.17.0
+  copy_with_extension: ^5.0.3
+  equatable: ^2.0.5
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.5
+  flutter_exit_app: ^1.1.2
+  go_router:
+  flutter_launcher_icons:
+  csv: ^6.0.0
+  desktop_drop: ^0.4.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.5
+  build_runner: ^2.4.6
+  json_serializable: ^6.7.1
+  flutter_flavorizr: ^2.1.5
+  http_mock_adapter: ^0.6.1
+  mobx_codegen: ^2.7.1
+  copy_with_extension_gen: ^5.0.3
+  flutter_lints: ^3.0.1
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+

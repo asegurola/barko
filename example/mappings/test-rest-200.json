@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/test-rest-success"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "message": "OK",
+      "data": "Here’s your response"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

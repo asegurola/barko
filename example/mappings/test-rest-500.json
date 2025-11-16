@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/test-rest-server-error"
+  },
+  "response": {
+    "status": 500,
+    "jsonBody": {
+      "message": "Something went wrong"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

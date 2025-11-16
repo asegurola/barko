@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - newrelic_mobile (1.1.2):
+    - Flutter
+    - NewRelicAgent (~> 7.5.2)
+  - NewRelicAgent (7.5.9)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - newrelic_mobile (from `.symlinks/plugins/newrelic_mobile/ios`)
+
+SPEC REPOS:
+  trunk:
+    - NewRelicAgent
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  newrelic_mobile:
+    :path: ".symlinks/plugins/newrelic_mobile/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  newrelic_mobile: 900aa633c7104dd148215ad15c303863c7d8822b
+  NewRelicAgent: 4606c1eb2402142dafa402bb50aa35f1e64c5cbc
+
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+
+COCOAPODS: 1.16.2

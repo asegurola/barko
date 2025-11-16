@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/test-rest-missing"
+  },
+  "response": {
+    "status": 404,
+    "jsonBody": {
+      "error": "Resource not found"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
