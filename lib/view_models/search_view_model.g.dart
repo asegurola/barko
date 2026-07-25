@@ -255,6 +255,39 @@ mixin _$SearchViewModel on _SearchViewModel, Store {
   }
 
   @override
+  void setEventTypeVisible(EntryType entryType, {required bool isVisible}) {
+    final _$actionInfo = _$_SearchViewModelActionController.startAction(
+        name: '_SearchViewModel.setEventTypeVisible');
+    try {
+      return super.setEventTypeVisible(entryType, isVisible: isVisible);
+    } finally {
+      _$_SearchViewModelActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void showAllEventTypes() {
+    final _$actionInfo = _$_SearchViewModelActionController.startAction(
+        name: '_SearchViewModel.showAllEventTypes');
+    try {
+      return super.showAllEventTypes();
+    } finally {
+      _$_SearchViewModelActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void hideAllEventTypes() {
+    final _$actionInfo = _$_SearchViewModelActionController.startAction(
+        name: '_SearchViewModel.hideAllEventTypes');
+    try {
+      return super.hideAllEventTypes();
+    } finally {
+      _$_SearchViewModelActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 userId: ${userId},

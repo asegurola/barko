@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  newrelic_mobile: 1.1.4
+  newrelic_mobile: 1.2.9
   dio: 5.9.0
 
 

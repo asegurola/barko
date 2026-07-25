@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../models/generic_event_entry.dart';
 import '../../view_models/search_view_model.dart';
 import '../../view_models/view_model_locator.dart';
 import '../../widgets/custom_text_form_field.dart';
@@ -229,23 +230,83 @@ class _SearchViewState extends State<SearchView> {
               ),
 
               if (_viewModel.isExpanded)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                Column(
                   children: [
-                    WrapFieldWidget(
-                      child: CustomTextFormField.text(
-                        iconData: Icons.filter_alt_outlined,
-                        controller: _filterController,
-                        label: 'Filter',
-                        onChanged: (value) => _viewModel.filter = value,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        WrapFieldWidget(
+                          child: CustomTextFormField.text(
+                            iconData: Icons.filter_alt_outlined,
+                            controller: _filterController,
+                            label: 'Filter',
+                            onChanged: (value) => _viewModel.filter = value,
+                          ),
+                        ),
+                        WrapFieldWidget(
+                          child: CustomTextFormField.text(
+                            iconData: Icons.search,
+                            controller: _searchController,
+                            label: 'Search',
+                            onChanged: (value) => _viewModel.search = value,
+                          ),
+                        ),
+                      ],
                     ),
-                    WrapFieldWidget(
-                      child: CustomTextFormField.text(
-                        iconData: Icons.search,
-                        controller: _searchController,
-                        label: 'Search',
-                        onChanged: (value) => _viewModel.search = value,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(4, 12, 12, 0),
+                            child: Text('Event types'),
+                          ),
+                          Expanded(
+                            child: Wrap(
+                              spacing: 4,
+                              runSpacing: 4,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                for (final entryType in EntryType.values)
+                                  SizedBox(
+                                    width: 190,
+                                    child: CheckboxListTile(
+                                      dense: true,
+                                      contentPadding: EdgeInsets.zero,
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      title: Text(entryType.displayName),
+                                      value: _viewModel.isEventTypeVisible(
+                                        entryType,
+                                      ),
+                                      onChanged: (value) =>
+                                          _viewModel.setEventTypeVisible(
+                                            entryType,
+                                            isVisible: value ?? true,
+                                          ),
+                                    ),
+                                  ),
+                                TextButton.icon(
+                                  onPressed: _viewModel.hiddenEventTypes.isEmpty
+                                      ? null
+                                      : _viewModel.showAllEventTypes,
+                                  icon: const Icon(Icons.restart_alt),
+                                  label: const Text('Show all'),
+                                ),
+                                TextButton.icon(
+                                  onPressed:
+                                      _viewModel.hiddenEventTypes.length ==
+                                          EntryType.values.length
+                                      ? null
+                                      : _viewModel.hideAllEventTypes,
+                                  icon: const Icon(Icons.visibility_off),
+                                  label: const Text('Hide all'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

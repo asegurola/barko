@@ -15,6 +15,29 @@ enum EntryType {
   other,
 }
 
+extension EntryTypeDisplayName on EntryType {
+  String get displayName {
+    switch (this) {
+      case EntryType.request:
+        return 'Request';
+      case EntryType.requestError:
+        return 'Request error';
+      case EntryType.handledException:
+        return 'Handled exception';
+      case EntryType.breadcrumb:
+        return 'Breadcrumb';
+      case EntryType.crash:
+        return 'Crash';
+      case EntryType.customEvent:
+        return 'Custom event';
+      case EntryType.networkEvent:
+        return 'Network event';
+      case EntryType.other:
+        return 'Other';
+    }
+  }
+}
+
 DateTime _parseDateTime(dynamic timestamp) {
   if (timestamp is int) {
     return DateTime.fromMillisecondsSinceEpoch(timestamp);
@@ -70,6 +93,16 @@ class GenericEventEntry {
   Map<String, dynamic> toJson() => _$GenericEventEntryToJson(this);
 
   EntryType get entryType {
+    if (_has('category', 'Custom')) {
+      return EntryType.customEvent;
+    } else if (_has('category', 'NetworkRequest')) {
+      return EntryType.request;
+    } else if (_has('category', 'RequestError')) {
+      return EntryType.requestError;
+    } else if (_has('category', 'Breadcrumb')) {
+      return EntryType.breadcrumb;
+    }
+
     if (_containsAndNotNull('requestUrl')) {
       if (_containsAndNotNull('errorType')) {
         return EntryType.requestError;
@@ -83,11 +116,11 @@ class GenericEventEntry {
       return EntryType.crash;
     } else if (_containsAndNotNull('eventName')) {
       return EntryType.customEvent;
-    } else if (_containsAndNotNull('name')) {
-      return EntryType.breadcrumb;
     } else if (_containsAndNotNull('errorMessage') &&
         _has('name', 'UnknownNetworkError')) {
       return EntryType.networkEvent;
+    } else if (_containsAndNotNull('name')) {
+      return EntryType.breadcrumb;
     } else {
       return EntryType.other;
     }
@@ -136,6 +169,7 @@ class GenericEventEntry {
         return ['name'];
       case EntryType.customEvent:
         return [
+          'name',
           'eventName',
           'productName',
           'itemName',

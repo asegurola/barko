@@ -43,7 +43,7 @@ class NewrelicService {
     final fields = buildQueryFields(extraFields: extraFields).join(',');
 
     var tables =
-        'MobileRequest,MobileRequestError,MobileBreadcrumb,MobileHandledException,MobileCrash,MobileCustomEvent,MobileNetworkEvent';
+        'MobileRequest,MobileRequestError,MobileBreadcrumb,MobileHandledException,MobileCrash,MobileCustomEvent,`Mobile Custom Event`,MobileNetworkEvent';
     for (final extraTable in extraTables) {
       tables += ',$extraTable';
     }
