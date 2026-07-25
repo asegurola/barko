@@ -188,10 +188,10 @@ packages:
     dependency: "direct main"
     description:
       name: newrelic_mobile
-      sha256: a3cede8f55ef1a603396321e905cf98da1df19e5dda69bbdb47d8a6e9c1f9368
+      sha256: a60064d0724cbbc0effee2f906d94c5a9c06aa78ddae894069eeb3e19cf91923
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4"
+    version: "1.2.9"
   path:
     dependency: transitive
     description:

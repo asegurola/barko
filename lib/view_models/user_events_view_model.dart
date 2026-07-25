@@ -51,13 +51,22 @@ abstract class _UserEventsViewModel extends BaseViewModel with Store {
   @action
   @override
   Future<void> init() async {
-    reaction((_) => _searchViewModel.search + _searchViewModel.filter, (_) {
-      if (_debounceSearch?.isActive ?? false) _debounceSearch?.cancel();
-      _debounceSearch = Timer(
-        const Duration(milliseconds: 300),
-        doFilteringAndSearch,
-      );
-    });
+    reaction(
+      (_) {
+        final hiddenEventTypeCount = _searchViewModel.hiddenEventTypes.length
+            .toString();
+        return _searchViewModel.search +
+            _searchViewModel.filter +
+            hiddenEventTypeCount;
+      },
+      (_) {
+        if (_debounceSearch?.isActive ?? false) _debounceSearch?.cancel();
+        _debounceSearch = Timer(
+          const Duration(milliseconds: 300),
+          doFilteringAndSearch,
+        );
+      },
+    );
   }
 
   void checkFields() {
@@ -100,6 +109,10 @@ abstract class _UserEventsViewModel extends BaseViewModel with Store {
         : RegExp(_searchViewModel.filter);
     filteredEvents.clear();
     for (final entry in _events) {
+      if (!_searchViewModel.isEventTypeVisible(entry.entryType)) {
+        continue;
+      }
+
       final perFieldMatches = <String, Iterable<RegExpMatch>>{};
       var hasMatches = false;
       var passesFilter = filterRegExp == null ? true : false;

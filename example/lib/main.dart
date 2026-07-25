@@ -8,7 +8,7 @@ import 'package:newrelic_mobile/loglevel.dart';
 import 'package:newrelic_mobile/newrelic_mobile.dart';
 
 const mockUserId = '8f9e2ec6-0a49-4e5e-9039-027e50ced24d';
-const kBaseUrl = 'http://192.168.1.56:8080';
+const kBaseUrl = 'http://192.168.1.107:8080';
 
 final dio = Dio();
 

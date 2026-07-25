@@ -1,11 +1,14 @@
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/generic_event_entry.dart';
 import '../services/service_locator.dart';
 import '../utils/constants.dart';
 import 'base_view_model.dart';
 
 part 'search_view_model.g.dart';
+
+const hiddenEventTypesKey = 'hiddenEventTypes';
 
 class SearchViewModel extends _SearchViewModel with _$SearchViewModel {}
 
@@ -20,7 +23,6 @@ abstract class _SearchViewModel extends BaseViewModel with Store {
   static const appBuildKey = 'appBuild';
   static const daysKey = 'days';
   static const limitKey = 'limit';
-
   @observable
   String userId = '';
 
@@ -63,6 +65,11 @@ abstract class _SearchViewModel extends BaseViewModel with Store {
   @observable
   String search = '';
 
+  final ObservableSet<EntryType> hiddenEventTypes = ObservableSet();
+
+  bool isEventTypeVisible(EntryType entryType) =>
+      !hiddenEventTypes.contains(entryType);
+
   set daysAsString(String value) {
     days = int.tryParse(value);
   }
@@ -100,6 +107,18 @@ abstract class _SearchViewModel extends BaseViewModel with Store {
 
     days = _sharedPreferences.getInt(daysKey) ?? kDefaultDays;
     limit = _sharedPreferences.getInt(limitKey) ?? kDefaultLimit;
+    final savedHiddenEventTypes = _sharedPreferences.getStringList(
+      hiddenEventTypesKey,
+    );
+    if (savedHiddenEventTypes != null) {
+      hiddenEventTypes
+        ..clear()
+        ..addAll(
+          EntryType.values.where(
+            (entryType) => savedHiddenEventTypes.contains(entryType.name),
+          ),
+        );
+    }
 
     reaction((_) => userId, (value) {
       _sharedPreferences.setString(userIdKey, value);
@@ -116,6 +135,12 @@ abstract class _SearchViewModel extends BaseViewModel with Store {
     reaction((_) => limit, (value) {
       saveIntReaction(value, limitKey);
     });
+    reaction((_) => hiddenEventTypes.toList(), (_) {
+      _sharedPreferences.setStringList(
+        hiddenEventTypesKey,
+        hiddenEventTypes.map((entryType) => entryType.name).toList(),
+      );
+    });
   }
 
   void saveIntReaction(int? intValue, String intKey) {
@@ -129,5 +154,24 @@ abstract class _SearchViewModel extends BaseViewModel with Store {
   @action
   void onToggleExpanded() {
     isExpanded = !isExpanded;
+  }
+
+  @action
+  void setEventTypeVisible(EntryType entryType, {required bool isVisible}) {
+    if (isVisible) {
+      hiddenEventTypes.remove(entryType);
+    } else {
+      hiddenEventTypes.add(entryType);
+    }
+  }
+
+  @action
+  void showAllEventTypes() {
+    hiddenEventTypes.clear();
+  }
+
+  @action
+  void hideAllEventTypes() {
+    hiddenEventTypes.addAll(EntryType.values);
   }
 }
