@@ -78,4 +78,21 @@ void main() {
       EntryType.values.map((entryType) => entryType.name).toSet(),
     );
   });
+
+  test('legacy unknown network errors are classified as network events', () {
+    final entry = GenericEventEntry(
+      timestamp: DateTime(2026),
+      appName: 'test',
+      appVersion: '1.0.0',
+      appBuild: '1',
+      userId: null,
+      deviceUuid: null,
+      fields: const {
+        'name': 'UnknownNetworkError',
+        'errorMessage': 'Connection failed',
+      },
+    );
+
+    expect(entry.entryType, EntryType.networkEvent);
+  });
 }

@@ -116,11 +116,11 @@ class GenericEventEntry {
       return EntryType.crash;
     } else if (_containsAndNotNull('eventName')) {
       return EntryType.customEvent;
-    } else if (_containsAndNotNull('name')) {
-      return EntryType.breadcrumb;
     } else if (_containsAndNotNull('errorMessage') &&
         _has('name', 'UnknownNetworkError')) {
       return EntryType.networkEvent;
+    } else if (_containsAndNotNull('name')) {
+      return EntryType.breadcrumb;
     } else {
       return EntryType.other;
     }
